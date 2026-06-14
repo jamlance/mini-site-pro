@@ -15,7 +15,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@inkress/admin-sdk": "^1.1.48",
     "@inkress/app-bridge": "github:jamlance/app-bridge",
-    "@inkress/app-kit": "github:jamlance/app-kit#main",
+    "@inkress/app-kit": "github:jamlance/app-kit#5fa25e5d026d8d623bf4ad404d4f7c5998350e7d",
     "@inkress/storefront-sdk": "^0.0.1",
     "@react-router/express": "^7.17.0",
     "@react-router/node": "^7.17.0",
