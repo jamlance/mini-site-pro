@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useRouteError } from "react-router";
 import type { Route } from "./+types/root";
 import { useReauthHandler } from "@inkress/app-kit/client";
 import appKitStyles from "@inkress/app-kit/styles.css?url";
@@ -39,7 +39,10 @@ export default function Root() {
 }
 
 export function ErrorBoundary() {
-  if (useReauthHandler()) {
+  const reconnecting = useReauthHandler();
+  const error = useRouteError();
+  // Embedded in the dashboard, recovering a session.
+  if (reconnecting) {
     return (
       <main className="bv-shell">
         <div className="bv-empty">
@@ -49,9 +52,28 @@ export function ErrorBoundary() {
       </main>
     );
   }
+  // 401 on a top-level page = opened the editor URL directly. The builder runs
+  // inside your Inkress dashboard; say so clearly instead of spinning forever.
+  if (isRouteErrorResponse(error) && error.status === 401) {
+    return (
+      <main className="mk-gate">
+        <div className="mk-gate-card">
+          <div className="mk-gate-mark" aria-hidden>◫</div>
+          <h1>Open this from your Inkress dashboard</h1>
+          <p>The Mini-site builder runs inside your Inkress dashboard, where it knows which store you’re editing. Open Apps → Mini-site Pro to start building.</p>
+          <a className="bv-btn primary" href="https://dev.inkress.com/dashboard" target="_top" rel="noopener">Go to dashboard</a>
+        </div>
+      </main>
+    );
+  }
   return (
-    <main className="bv-shell">
-      <div className="bv-banner">Something went wrong. Try reopening the app from your dashboard.</div>
+    <main className="mk-gate">
+      <div className="mk-gate-card">
+        <div className="mk-gate-mark" aria-hidden>!</div>
+        <h1>Something went wrong</h1>
+        <p>Try reopening the app from your Inkress dashboard.</p>
+        <a className="bv-btn primary" href="https://dev.inkress.com/dashboard" target="_top" rel="noopener">Go to dashboard</a>
+      </div>
     </main>
   );
 }

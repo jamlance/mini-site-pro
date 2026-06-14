@@ -477,3 +477,11 @@ a.mk-store-crow:hover { color: var(--accent); }
   .mk-side-main.split { grid-template-columns: 1fr; height: auto; overflow: visible; }
   .mk-side-main.split .mk-side-panel, .mk-side-canvascol { height: auto; }
 }
+
+/* ── standalone "open from dashboard" gate (shown when the editor URL is opened
+      directly, outside the embedded dashboard) ── */
+.mk-gate { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: radial-gradient(120% 90% at 50% 0%, color-mix(in oklch, var(--bv-accent) 8%, var(--bv-bg)), var(--bv-bg)); }
+.mk-gate-card { max-width: 460px; text-align: center; background: var(--bv-surface); border: 1px solid var(--bv-line); border-radius: 20px; padding: clamp(28px, 5vw, 44px); box-shadow: var(--bv-shadow); }
+.mk-gate-mark { width: 56px; height: 56px; margin: 0 auto 18px; display: grid; place-items: center; border-radius: 16px; background: color-mix(in oklch, var(--bv-accent) 14%, var(--bv-surface)); color: var(--bv-accent); font-size: 1.6rem; }
+.mk-gate-card h1 { font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", var(--bv-font); font-size: clamp(1.4rem, 4vw, 1.9rem); letter-spacing: -0.025em; margin: 0 0 10px; color: var(--bv-fg); }
+.mk-gate-card p { color: var(--bv-muted); line-height: 1.6; margin: 0 0 22px; }
