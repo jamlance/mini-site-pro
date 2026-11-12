@@ -48,6 +48,15 @@ export async function merchantAdmin(merchantId) {
   return new InkressSDK({ accessToken, mode: env.mode });
 }
 
+/** The merchant's current access token (offline refresh), for raw Inkress API calls. */
+export async function merchantAccessToken(merchantId) {
+  if (!tokens) throw new Error("offline tokens not configured");
+  return tokens.accessTokenFor(merchantId);
+}
+
+/** Inkress API base this install talks to (dev or prod). */
+export const inkressApiBase = env.apiBaseUrl;
+
 export const appKit = defineAppKit({
   appName: env.appName,
   clientId: env.clientId,

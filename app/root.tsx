@@ -8,12 +8,14 @@ import appKitStyles from "@inkress/app-kit/styles.css?url";
 import bricolageFont from "@fontsource-variable/bricolage-grotesque/index.css?url";
 import hankenFont from "@fontsource-variable/hanken-grotesk/index.css?url";
 import styles from "./styles.css?url";
+import inkwellEditor from "./inkwell-editor.css?url";
 
 export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: bricolageFont },
   { rel: "stylesheet", href: hankenFont },
   { rel: "stylesheet", href: appKitStyles },
   { rel: "stylesheet", href: styles },
+  { rel: "stylesheet", href: inkwellEditor },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {

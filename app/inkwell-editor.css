@@ -1,0 +1,95 @@
+/* Inkwell Mini Site editor (INK-1572). Cool, restrained: Inkress navy ink on a
+   lilac-grey dashboard ground, ruled cells for every choice, no warm tones.
+   Also resets the app-kit tokens the older editor tinted clay. */
+:root {
+  --bv-accent: #13123A;
+  --bv-bg: #F4F3F8;
+  --bv-surface: #FCFCFE;
+  --bv-fg: #13123A;
+  --bv-muted: #5A5975;
+  --bv-faint: #8E8DA6;
+  --bv-line: #E4E2EE;
+  --bv-radius: 6px;
+  --bv-radius-sm: 4px;
+  --bv-shadow: 0 1px 2px rgba(19, 18, 58, 0.05);
+}
+.ik-ed { min-height: 100vh; display: flex; flex-direction: column; background: #F4F3F8; color: #13123A; font-family: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, sans-serif; }
+.ik-ed h2, .ik-gate h1 { font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif; font-weight: 600; letter-spacing: -0.02em; }
+.ik-top { min-height: 64px; padding: 8px 20px; background: #FCFCFE; border-bottom: 1px solid #E4E2EE; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; position: sticky; top: 0; z-index: 3; }
+.ik-title { font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif; font-weight: 600; font-size: 18px; letter-spacing: -0.02em; }
+.ik-plan { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #6E2E95; }
+.ik-grow { flex: 1; }
+.ik-status { font-size: 13px; color: #5A5975; min-width: 64px; text-align: right; }
+.ik-live { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #3B3A5A; }
+.ik-live a { font-weight: 600; color: #13123A; }
+.ik-live .dot { width: 8px; height: 8px; border-radius: 4px; background: #1F8A55; }
+.ik-live.off { color: #5A5975; }
+.ik-btn { height: 40px; padding: 0 16px; border-radius: 6px; font: inherit; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; text-decoration: none; cursor: pointer; border: 1px solid transparent; }
+.ik-btn.solid { background: #13123A; color: #F4F3F8; }
+.ik-btn.ghost { background: #FCFCFE; border-color: #D8D6E4; color: #13123A; }
+.ik-btn:disabled { opacity: 0.55; cursor: default; }
+.ik-msg { margin: 0; padding: 10px 20px; font-size: 14px; border-bottom: 1px solid #E4E2EE; }
+.ik-msg.ok { background: #EAF5EF; color: #135C36; }
+.ik-msg.err { background: #FDECEE; color: #8A1C2B; }
+.ik-body { flex: 1; display: grid; grid-template-columns: minmax(260px, 300px) minmax(0, 1fr) minmax(280px, 340px); min-height: 0; }
+.ik-side { background: #FCFCFE; padding: 20px; display: flex; flex-direction: column; gap: 22px; overflow: auto; border-right: 1px solid #E4E2EE; }
+.ik-side + .ik-preview + .ik-side, .ik-preview + .ik-side { border-right: 0; border-left: 1px solid #E4E2EE; }
+.ik-side h2 { margin: 0 0 8px; font-family: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+.ik-side details { border-top: 1px solid #E4E2EE; padding-top: 14px; }
+.ik-side summary { cursor: pointer; font-size: 15px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; min-height: 32px; align-items: center; }
+.ik-side summary::after { content: "+"; color: #5A5975; font-weight: 400; }
+.ik-side details[open] summary::after { content: "−"; }
+.ik-side details > * + * { margin-top: 10px; }
+.ik-rule { padding-top: 18px; border-top: 1px solid #E4E2EE; }
+.ik-field { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: #5A5975; }
+.ik-field span { color: #8E8DA6; }
+.ik-field input, .ik-field textarea, .ik-row input, .ik-addr input { height: 40px; padding: 0 10px; border-radius: 4px; border: 1px solid #D8D6E4; background: #FFFFFF; font: inherit; font-size: 14px; color: #13123A; }
+.ik-field textarea { height: auto; padding: 8px 10px; resize: vertical; }
+.ik-field input:focus, .ik-field textarea:focus, .ik-row input:focus, .ik-addr input:focus { outline: 2px solid #9C4CC5; outline-offset: -1px; border-color: transparent; }
+.ik-help { margin: 7px 0 0; font-size: 12px; line-height: 1.45; color: #5A5975; }
+.ik-help.bad { color: #8A1C2B; }
+.ik-sub { margin: 14px 0 6px; font-size: 12px; font-weight: 600; color: #3B3A5A; }
+.ik-cells { display: grid; gap: 1px; background: #E0DEEA; border: 1px solid #E0DEEA; }
+.ik-cell { background: #FFFFFF; min-height: 44px; padding: 9px 12px; border: 0; font: inherit; font-size: 13px; color: #3B3A5A; text-align: left; display: flex; flex-direction: column; justify-content: center; gap: 2px; cursor: pointer; }
+.ik-cell small { font-size: 11.5px; color: #5A5975; font-weight: 400; }
+.ik-cell.on { box-shadow: inset 0 0 0 2px #13123A; color: #13123A; font-weight: 600; }
+.ik-cell:focus-visible { outline: 2px solid #9C4CC5; outline-offset: -2px; }
+.ik-cell.sw { align-items: center; padding: 0; }
+.ik-cell.sw span { width: 22px; height: 22px; border-radius: 2px; }
+.ik-addr { display: flex; align-items: center; height: 40px; border: 1px solid #D8D6E4; border-radius: 4px; background: #FFFFFF; overflow: hidden; font-size: 14px; }
+.ik-addr.bad { border-color: #C4374B; }
+.ik-addr input { flex: 1; min-width: 0; border: 0; height: 100%; }
+.ik-addr span { padding: 0 10px; color: #5A5975; white-space: nowrap; }
+.ik-rows { display: flex; flex-direction: column; gap: 6px; }
+.ik-row { display: grid; grid-template-columns: 1fr 1fr 32px; gap: 6px; }
+.ik-row input { min-width: 0; }
+.ik-x { border: 0; background: none; font-size: 20px; color: #5A5975; cursor: pointer; }
+.ik-link { align-self: flex-start; border: 0; background: none; padding: 6px 0; font: inherit; font-size: 13px; font-weight: 600; color: #13123A; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.ik-preview { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px; min-width: 0; }
+.ik-size { grid-template-columns: 1fr 1fr; }
+.ik-size .ik-cell { min-height: 34px; padding: 0 16px; align-items: center; }
+.ik-frame { width: 100%; display: flex; justify-content: center; }
+.ik-frame iframe, .ik-skeleton { border: 0; background: #F6F7F8; }
+.ik-frame.phone iframe, .ik-frame.phone .ik-skeleton { width: 390px; height: 760px; border: 10px solid #13123A; border-radius: 36px; box-shadow: 0 12px 32px rgba(19, 18, 58, 0.14); }
+.ik-frame.desktop iframe, .ik-frame.desktop .ik-skeleton { width: 100%; height: 760px; border: 1px solid #E4E2EE; border-radius: 6px; }
+.ik-skeleton { background: linear-gradient(100deg, #EDEBF3 30%, #F6F5FA 50%, #EDEBF3 70%) 0 0 / 300% 100%; animation: ik-shimmer 1.4s linear infinite; }
+@keyframes ik-shimmer { to { background-position: -300% 0; } }
+@media (prefers-reduced-motion: reduce) { .ik-skeleton { animation: none; } }
+@media (max-width: 1100px) {
+  .ik-body { grid-template-columns: minmax(0, 1fr); }
+  .ik-preview { order: -1; }
+  .ik-side, .ik-preview + .ik-side { border: 0; border-top: 1px solid #E4E2EE; }
+  .ik-frame.phone iframe { width: min(390px, 100%); }
+}
+.ik-gate { min-height: 100vh; background: #F4F3F8; color: #13123A; display: flex; align-items: flex-start; justify-content: center; padding: 48px 20px; font-family: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, sans-serif; }
+.ik-gate-in { max-width: 620px; }
+.ik-eyebrow { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #7A3AA0; }
+.ik-gate h1 { margin: 12px 0 0; font-size: 30px; line-height: 1.12; }
+.ik-muted { color: #3B3A5A; font-size: 15px; line-height: 1.55; }
+.ik-plans { margin: 24px 0; display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 1px; background: #E0DEEA; border: 1px solid #E0DEEA; }
+.ik-plans .c, .ik-plans .pl { background: #FFFFFF; padding: 10px 16px; font-size: 14px; color: #5A5975; }
+.ik-plans .k { color: #3B3A5A; }
+.ik-plans .y { color: #13123A; font-weight: 600; }
+.ik-plans .pl { display: flex; flex-direction: column; gap: 2px; padding: 16px; }
+.ik-plans .pl b { color: #13123A; font-size: 15px; }
+.ik-plans .pl.on { box-shadow: inset 0 0 0 2px #9C4CC5; }
