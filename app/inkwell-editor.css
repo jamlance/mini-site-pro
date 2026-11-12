@@ -42,7 +42,8 @@
 .ik-side details > * + * { margin-top: 10px; }
 .ik-rule { padding-top: 18px; border-top: 1px solid #E4E2EE; }
 .ik-field { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: #5A5975; }
-.ik-field span { color: #8E8DA6; }
+.ik-lbl em { font-style: normal; color: #8E8DA6; margin-left: 4px; }
+.ik-cells + .ik-field { margin-top: 12px; }
 .ik-field input, .ik-field textarea, .ik-row input, .ik-addr input { height: 40px; padding: 0 10px; border-radius: 4px; border: 1px solid #D8D6E4; background: #FFFFFF; font: inherit; font-size: 14px; color: #13123A; }
 .ik-field textarea { height: auto; padding: 8px 10px; resize: vertical; }
 .ik-field input:focus, .ik-field textarea:focus, .ik-row input:focus, .ik-addr input:focus { outline: 2px solid #9C4CC5; outline-offset: -1px; border-color: transparent; }
