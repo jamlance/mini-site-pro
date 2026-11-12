@@ -80,6 +80,7 @@ describe("checkout form", () => {
     const { ASSETS_JS } = await import("./assets/js");
     expect(ASSETS_JS).toContain("first_name: f.first.value.trim()");
     expect(ASSETS_JS).toContain("name: fullName,");
+    expect(ASSETS_JS).toContain("body.pickupLocation = cfg.pickupAddress");
   });
 });
 
