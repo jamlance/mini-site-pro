@@ -1,6 +1,6 @@
-// Theme is now a panel inside the unified workspace. Redirect the old URL.
+// INK-1572: the Inkwell Mini Site editor replaced the old builder/products/theme tabs.
 import { redirect } from "react-router";
 
 export function loader() {
-  return redirect("/?panel=theme");
+  return redirect("/");
 }

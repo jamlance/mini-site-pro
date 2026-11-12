@@ -25,6 +25,12 @@ export const site = pgTable("site", {
   currency: text("currency").notNull().default("JMD"),
   /** Which editor shell the merchant prefers: 'studio' (preview-first) | 'sidebar'. */
   editorLayout: text("editor_layout").notNull().default("studio"),
+  /** INK-1572: Inkwell Mini Site content (see app/lib/inkwell/content.ts). */
+  inkwell: jsonb("inkwell"),
+  /** INK-1572: the FleekSite site this merchant publishes to, and where it is live. */
+  fleeksiteSiteUid: text("fleeksite_site_uid"),
+  liveHost: text("live_host"),
+  publishedAt: timestamp("published_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
@@ -83,6 +89,10 @@ export const APP_DDL = `
   ALTER TABLE site ADD COLUMN IF NOT EXISTS hero_image TEXT;
   ALTER TABLE site ADD COLUMN IF NOT EXISTS sections JSONB NOT NULL DEFAULT '[]';
   ALTER TABLE site ADD COLUMN IF NOT EXISTS editor_layout TEXT NOT NULL DEFAULT 'studio';
+  ALTER TABLE site ADD COLUMN IF NOT EXISTS inkwell JSONB;
+  ALTER TABLE site ADD COLUMN IF NOT EXISTS fleeksite_site_uid TEXT;
+  ALTER TABLE site ADD COLUMN IF NOT EXISTS live_host TEXT;
+  ALTER TABLE site ADD COLUMN IF NOT EXISTS published_at TIMESTAMPTZ;
   CREATE UNIQUE INDEX IF NOT EXISTS idx_ms_handle ON site (handle) WHERE handle IS NOT NULL;
   CREATE TABLE IF NOT EXISTS products (
     id BIGSERIAL PRIMARY KEY, merchant_id BIGINT NOT NULL,
