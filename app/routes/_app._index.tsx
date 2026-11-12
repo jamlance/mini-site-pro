@@ -206,9 +206,9 @@ function EditorBody({ data }: { data: Route.ComponentProps["loaderData"] }) {
 
           <details open>
             <summary>Hero</summary>
-            <label className="ik-field">Small line above <span>Optional</span><input value={c.hero.eyebrow} maxLength={80} placeholder="What you do · Town · Since 2019" onChange={(e) => set("hero", { ...c.hero, eyebrow: e.target.value })} /></label>
+            <label className="ik-field"><span className="ik-lbl">Small line above <em>Optional</em></span><input value={c.hero.eyebrow} maxLength={80} placeholder="What you do · Town · Since 2019" onChange={(e) => set("hero", { ...c.hero, eyebrow: e.target.value })} /></label>
             <label className="ik-field">Headline<input value={c.hero.headline} maxLength={90} onChange={(e) => set("hero", { ...c.hero, headline: e.target.value })} /></label>
-            <label className="ik-field">Short line <span>Optional</span><textarea rows={2} value={c.hero.line} maxLength={200} onChange={(e) => set("hero", { ...c.hero, line: e.target.value })} /></label>
+            <label className="ik-field"><span className="ik-lbl">Short line <em>Optional</em></span><textarea rows={2} value={c.hero.line} maxLength={200} onChange={(e) => set("hero", { ...c.hero, line: e.target.value })} /></label>
           </details>
 
           <details>
@@ -218,9 +218,9 @@ function EditorBody({ data }: { data: Route.ComponentProps["loaderData"] }) {
 
           <details>
             <summary>About + testimonial</summary>
-            <label className="ik-field">Lead line <span>Optional</span><input value={c.about.lead} maxLength={140} onChange={(e) => set("about", { ...c.about, lead: e.target.value })} /></label>
-            <label className="ik-field">A few sentences <span>Optional</span><textarea rows={4} value={c.about.body} maxLength={900} onChange={(e) => set("about", { ...c.about, body: e.target.value })} /></label>
-            <label className="ik-field">Customer quote <span>Optional</span><textarea rows={2} value={c.testimonial.quote} maxLength={280} onChange={(e) => set("testimonial", { ...c.testimonial, quote: e.target.value })} /></label>
+            <label className="ik-field"><span className="ik-lbl">Lead line <em>Optional</em></span><input value={c.about.lead} maxLength={140} onChange={(e) => set("about", { ...c.about, lead: e.target.value })} /></label>
+            <label className="ik-field"><span className="ik-lbl">A few sentences <em>Optional</em></span><textarea rows={4} value={c.about.body} maxLength={900} onChange={(e) => set("about", { ...c.about, body: e.target.value })} /></label>
+            <label className="ik-field"><span className="ik-lbl">Customer quote <em>Optional</em></span><textarea rows={2} value={c.testimonial.quote} maxLength={280} onChange={(e) => set("testimonial", { ...c.testimonial, quote: e.target.value })} /></label>
             <label className="ik-field">Who said it<input value={c.testimonial.author} maxLength={80} placeholder="Name, town" onChange={(e) => set("testimonial", { ...c.testimonial, author: e.target.value })} /></label>
             <p className="ik-help">Empty here hides the dark band.</p>
           </details>
