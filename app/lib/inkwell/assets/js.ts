@@ -236,6 +236,7 @@ export const ASSETS_JS = String.raw`
         notes: note,
         paymentMethod: 'inkress',
       };
+      if (how === 'pickup') body.pickupLocation = cfg.pickupAddress || cfg.name || 'Pickup';
       if (how === 'delivery') body.shippingAddress = { name: fullName, line1: f.street.value.trim(), city: f.town.value.trim(), region: f.parish.value.trim(), country: 'JM' };
       pay.disabled = true; pay.textContent = 'Opening secure payment…';
       fetch('/payments/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) })
