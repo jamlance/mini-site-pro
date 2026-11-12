@@ -72,6 +72,17 @@ describe("buildTemplates", () => {
   });
 });
 
+describe("checkout form", () => {
+  it("asks for first and last name and sends them with every order, address or not", async () => {
+    const page = indexPage(ctx());
+    expect(page).toContain('name="first"');
+    expect(page).toContain('name="last"');
+    const { ASSETS_JS } = await import("./assets/js");
+    expect(ASSETS_JS).toContain("first_name: f.first.value.trim()");
+    expect(ASSETS_JS).toContain("name: fullName,");
+  });
+});
+
 describe("renderPreview", () => {
   it("renders the real template with items, money formatting and inlined assets", async () => {
     const items = [

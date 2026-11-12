@@ -210,7 +210,7 @@ function bagDialogs(ctx: TemplateContext): string {
     <ul class="lines" data-lines></ul>
     <fieldset class="choose" data-fulfil><legend>How to get it</legend><div class="cells" data-fulfil-cells></div></fieldset>
     <div class="fields">
-      <label>Your name<input name="name" autocomplete="name" required></label>
+      <div class="two"><label>First name<input name="first" autocomplete="given-name" required></label><label>Last name<input name="last" autocomplete="family-name" required></label></div>
       <label>Email for your receipt<input name="email" type="email" autocomplete="email" required></label>
       <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
       <div data-address hidden>

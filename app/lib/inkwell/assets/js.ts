@@ -209,29 +209,34 @@ export const ASSETS_JS = String.raw`
     var form = $('[data-bag-form]', bag);
     var err = $('[data-err]', bag);
     var pay = $('[data-pay]', bag);
-    try { var saved = JSON.parse(localStorage.getItem(KEY + '.buyer') || '{}'); ['name', 'email', 'phone', 'street', 'town', 'parish'].forEach(function (k) { if (saved[k] && form.elements[k]) form.elements[k].value = saved[k]; }); } catch (e) { /* none */ }
+    try { var saved = JSON.parse(localStorage.getItem(KEY + '.buyer') || '{}'); ['first', 'last', 'email', 'phone', 'street', 'town', 'parish'].forEach(function (k) { if (saved[k] && form.elements[k]) form.elements[k].value = saved[k]; }); } catch (e) { /* none */ }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       err.hidden = true;
       if (document.body.getAttribute('data-preview')) { err.textContent = 'This is the preview. Checkout opens on your live site.'; err.hidden = false; return; }
       var f = form.elements;
       var how = chosen();
-      var need = ['name', 'email', 'phone'].concat(how === 'delivery' ? ['street', 'town', 'parish'] : []);
+      var need = ['first', 'last', 'email', 'phone'].concat(how === 'delivery' ? ['street', 'town', 'parish'] : []);
       var missing = need.filter(function (k) { return !String(f[k].value || '').trim(); });
-      if (missing.length) { err.textContent = 'Please fill in your ' + missing.join(', ') + '.'; err.hidden = false; f[missing[0]].focus(); return; }
+      if (missing.length) { var WORD = { first: 'first name', last: 'last name', email: 'email', phone: 'phone number', street: 'street address', town: 'town', parish: 'parish' };
+        err.textContent = 'Please fill in your ' + missing.map(function (k) { return WORD[k] || k; }).join(', ') + '.'; err.hidden = false; f[missing[0]].focus(); return; }
       if (!/^\S+@\S+\.\S+$/.test(f.email.value.trim())) { err.textContent = 'That email address looks incomplete.'; err.hidden = false; f.email.focus(); return; }
       var lines = read();
       if (!lines.length) return;
-      try { localStorage.setItem(KEY + '.buyer', JSON.stringify({ name: f.name.value, email: f.email.value, phone: f.phone.value, street: f.street.value, town: f.town.value, parish: f.parish.value })); } catch (x) { /* none */ }
+      try { localStorage.setItem(KEY + '.buyer', JSON.stringify({ first: f.first.value, last: f.last.value, email: f.email.value, phone: f.phone.value, street: f.street.value, town: f.town.value, parish: f.parish.value })); } catch (x) { /* none */ }
       var note = (LABEL[how] || how) + (how === 'pickup' && cfg.pickupAddress ? ' at ' + cfg.pickupAddress : '') + (f.notes.value.trim() ? '. ' + f.notes.value.trim() : '');
+      var fullName = (f.first.value.trim() + ' ' + f.last.value.trim()).trim();
       var body = {
+        name: fullName,
+        first_name: f.first.value.trim(),
+        last_name: f.last.value.trim(),
         items: lines.map(function (l) { var it = { id: l.id, quantity: l.qty }; if (l.props && Object.keys(l.props).length) it.properties = l.props; return it; }),
         email: f.email.value.trim(),
         phone: f.phone.value.trim(),
         notes: note,
         paymentMethod: 'inkress',
       };
-      if (how === 'delivery') body.shippingAddress = { name: f.name.value.trim(), line1: f.street.value.trim(), city: f.town.value.trim(), region: f.parish.value.trim(), country: 'JM' };
+      if (how === 'delivery') body.shippingAddress = { name: fullName, line1: f.street.value.trim(), city: f.town.value.trim(), region: f.parish.value.trim(), country: 'JM' };
       pay.disabled = true; pay.textContent = 'Opening secure payment…';
       fetch('/payments/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) })
         .then(function (r) { return r.json().catch(function () { return {}; }); })

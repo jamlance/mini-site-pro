@@ -132,6 +132,7 @@ h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:600;
 .fields label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500}
 .fields input,.fields select{height:48px;padding:0 12px;border-radius:var(--r);border:1px solid #C9CED4;background:#fff;font:inherit;font-size:16px;color:#13123A}
 .fields [data-address]{display:grid;gap:12px}
+.fields .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fields [data-address][hidden]{display:none}
 .err{margin:0;padding:10px 12px;background:#FDECEE;color:#8A1C2B;font-size:14px}
 .err[hidden]{display:none}
