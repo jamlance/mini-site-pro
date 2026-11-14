@@ -15,6 +15,7 @@ import { createAwsBlobStore } from "@inkress/app-kit/server/services";
 import { InkressSDK } from "@inkress/admin-sdk";
 import { eq } from "drizzle-orm";
 import * as schema from "../db/schema.server.mjs";
+import { OrderEventKind, storefrontOrderEvent } from "./order-event.mjs";
 
 const env = loadEnv();
 
@@ -93,13 +94,20 @@ export {
 export { decodeDataUrl, isAllowedImage } from "@inkress/app-kit/server/services";
 
 // Inbound webhook (mounted at /webhooks/inkress/:merchantId). Reconciles a
-// storefront order to "paid" when Inkress reports payment.
+// storefront order to "paid" when Inkress reports payment; a test payment changes nothing.
 export const webhookHandler = createWebhookHandler(appKit, async (evt) => {
-  if (!/paid|confirmed/i.test(evt.topic)) return;
-  const ev = evt.payload?.event || {};
-  const order = ev.data?.order || ev.data || {};
-  const inkressOrderId = order.id != null ? String(order.id) : null;
-  if (!inkressOrderId || !storage) return;
-  await storage.db.update(schema.orders).set({ state: "paid" }).where(eq(schema.orders.inkressOrderId, inkressOrderId));
-  console.log(`[webhook] ${evt.topic} → order ${inkressOrderId} marked paid`);
+  const decision = storefrontOrderEvent(evt);
+  switch (decision.kind) {
+    case OrderEventKind.Test:
+      // An Inkress test payment charged no one: the storefront order stays as it is.
+      console.info(`[webhook] test order ${decision.inkressOrderId ?? "?"} ignored`);
+      return;
+    case OrderEventKind.Paid:
+      if (!storage) return;
+      await storage.db.update(schema.orders).set({ state: "paid" }).where(eq(schema.orders.inkressOrderId, decision.inkressOrderId));
+      console.log(`[webhook] ${evt.topic} → order ${decision.inkressOrderId} marked paid`);
+      return;
+    default:
+      return;
+  }
 });
